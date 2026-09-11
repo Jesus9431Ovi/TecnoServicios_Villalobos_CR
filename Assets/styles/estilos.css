@@ -1,0 +1,89 @@
+/* ===================================
+   VARIABLES
+=================================== */
+
+:root {
+
+    --color-primario: #0A192F;
+    --color-secundario: #007BFF;
+    --color-acento: #00B4D8;
+
+    --color-fondo: #F5F7FA;
+    --color-texto: #1A1A2E;
+    --color-blanco: #FFFFFF;
+
+    --color-gris: #6B7280;
+
+  /* Fuentes */
+  --font-title: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  /* Tamaños de fuente */
+  --size-title: 2.5rem;    /* 40px base */
+  --size-body: 1rem;       /* 16px base */
+
+
+    --sombra: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+    --radio: 15px;
+
+    --transicion: 0.3s ease;
+
+    --max-width: 1200px;
+}
+
+/* ===================================
+   RESET
+=================================== */
+
+* {
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+/* ===================================
+   GENERAL
+=================================== */
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+
+body {
+
+    font-family: var(--font-body);
+
+    background-color: var(--color-fondo);
+
+    color: var(--color-texto);
+
+    line-height: 1.6;
+
+}
+
+header {
+    background-color: var(--color-primario);
+    padding: 20px;
+}
+
+.navegacion {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.navegacion a {
+    color: var(--color-blanco);
+    text-decoration: none;
+}
+
+section {
+    padding: 60px 20px;
+}
