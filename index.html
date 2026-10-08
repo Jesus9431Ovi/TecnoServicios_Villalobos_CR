@@ -28,13 +28,37 @@
     <meta name="language" content="Spanish" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="img/favicon.png" />
+    <link rel="icon" type="image/svg+xml" href="Assets/images/favicon/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="64x64" href="Assets/images/favicon/favicon.png" />
+    <link rel="icon" href="Assets/images/favicon/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="Assets/images/favicon/favicon-180.png" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="Assets/styles/estilos.css" />
   </head>
 
   <body>
     <header>
+      <a
+        href="#inicio"
+        class="logo"
+        aria-label="TecnoServicios Villalobos CR, ir al inicio"
+      >
+        <img
+          src="Assets/images/Logo/logo-horizontal-oscuro.svg"
+          alt="TecnoServicios Villalobos CR"
+          width="225"
+          height="56"
+        />
+      </a>
+
       <nav class="navegacion" aria-label="Navegación principal">
         <a href="#inicio">Inicio</a>
 
@@ -46,13 +70,53 @@
       </nav>
     </header>
     <main>
-      <section id="inicio">
-        <h1>TecnoServicios Villalobos CR</h1>
+      <!-- =========================
+     HERO PRINCIPAL
+========================== -->
 
-        <p>
-          Soluciones informáticas, soporte técnico y servicios tecnológicos para
-          personas y empresas.
-        </p>
+      <section id="inicio" class="hero">
+        <!-- Imagen responsive -->
+
+        <picture class="hero-imagen">
+          <source
+            media="(max-width: 600px)"
+            srcset="Assets/images/hero-mobile2.webp"
+          />
+
+          <source
+            media="(max-width: 1024px)"
+            srcset="Assets/images/hero-tablet1.webp"
+          />
+
+          <img
+            src="Assets/images/hero-desktop_1598x900.webp"
+            alt="Espacio de trabajo tecnológico con equipos informáticos"
+            fetchpriority="high"
+          />
+        </picture>
+
+        <!-- Capa oscura para mejorar el contraste -->
+
+        <article class="hero-contenido">
+          <p class="hero-etiqueta">SOLUCIONES TECNOLÓGICAS</p>
+
+          <h1>TecnoServicios Villalobos CR</h1>
+
+          <p class="hero-descripcion">
+            Soluciones informáticas, soporte técnico y servicios tecnológicos
+            para personas, emprendedores y empresas en Costa Rica.
+          </p>
+
+          <nav class="hero-botones" aria-label="Acciones principales">
+            <a href="#servicios" class="boton boton-primario">
+              Ver servicios
+            </a>
+
+            <a href="#contacto" class="boton boton-secundario">
+              Solicitar información
+            </a>
+          </nav>
+        </article>
       </section>
 
       <section id="nosotros">
@@ -64,31 +128,94 @@
           nuestros clientes.
         </p>
       </section>
-      <section id="servicios">
-        <h2>Nuestros Servicios</h2>
 
-        <article>
-          <h3>Soporte Técnico</h3>
+      <section id="servicios" class="seccion-servicios">
+        <header class="encabezado-seccion">
+          <h2>Nuestros Servicios</h2>
+          <p>Soluciones tecnológicas para tus necesidades.</p>
+        </header>
 
-          <p>Mantenimiento, reparación y configuración de equipos.</p>
-        </article>
+        <section class="servicios-grid" aria-label="Lista de servicios">
+          <article class="tarjeta-servicio">
+            <h3>Soporte Técnico</h3>
+            <p>Mantenimiento, reparación y configuración de equipos.</p>
+          </article>
 
-        <article>
-          <h3>Desarrollo Web</h3>
+          <article class="tarjeta-servicio">
+            <h3>Desarrollo Web</h3>
+            <p>Creación de sitios web modernos y adaptables.</p>
+          </article>
 
-          <p>Creación de sitios web modernos y adaptables.</p>
-        </article>
-
-        <article>
-          <h3>Redes Informáticas</h3>
-
-          <p>Instalación y configuración de redes.</p>
-        </article>
+          <article class="tarjeta-servicio">
+            <h3>Redes Informáticas</h3>
+            <p>Instalación y configuración de redes.</p>
+          </article>
+        </section>
       </section>
+
       <section id="contacto">
         <h2>Contacto</h2>
 
         <p>Solicita información sobre nuestros servicios informáticos.</p>
+
+        <form class="formulario-contacto">
+          <p class="campo">
+            <label for="nombre">Nombre completo</label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              placeholder="Escribe tu nombre"
+              required
+            />
+          </p>
+
+          <p class="campo">
+            <label for="correo">Correo electrónico</label>
+            <input
+              type="email"
+              id="correo"
+              name="correo"
+              placeholder="ejemplo@correo.com"
+              required
+            />
+          </p>
+
+          <p class="campo">
+            <label for="telefono">Teléfono</label>
+            <input
+              type="tel"
+              id="telefono"
+              name="telefono"
+              placeholder="8888-8888"
+            />
+          </p>
+
+          <p class="campo">
+            <label for="servicio">Servicio de interés</label>
+
+            <select id="servicio" name="servicio">
+              <option value="">Seleccione un servicio</option>
+              <option value="soporte">Soporte Técnico</option>
+              <option value="web">Desarrollo Web</option>
+              <option value="redes">Redes Informáticas</option>
+            </select>
+          </p>
+
+          <p class="campo">
+            <label for="mensaje">Mensaje</label>
+
+            <textarea
+              id="mensaje"
+              name="mensaje"
+              rows="5"
+              placeholder="Escribe tu consulta..."
+              required
+            ></textarea>
+          </p>
+
+          <button type="submit">Enviar mensaje</button>
+        </form>
       </section>
     </main>
 
@@ -110,11 +237,11 @@
         <a href="#contacto"> Contacto </a>
       </nav>
 
-      <section class="legal-links">
+      <nav class="legal-links">
         <a href="#privacidad">Política de Privacidad</a>
         <a href="#cookies">Política de Cookies</a>
         <a href="#aviso-legal">Aviso Legal</a>
-      </section>
+      </nav>
 
       <p class="copyright">
         &copy; 2026 TecnoServicios Villalobos CR. Todos los derechos reservados.

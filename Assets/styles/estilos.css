@@ -1,89 +1,677 @@
-/* ===================================
-   VARIABLES
-=================================== */
+/* =====================================================
+   PROYECTO: TecnoServicios Villalobos CR
+   ARCHIVO: estilos.css
+
+   Enfoque: MOBILE-FIRST
+   - Los estilos base son para móvil (< 600px).
+   - Se amplía con min-width: 600px (tablet) y 1024px (PC).
+   - Se usan clamp(), Flexbox y Grid para que el diseño
+     se adapte solo, con pocos media queries.
+===================================================== */
+
+/* =====================================================
+   1. VARIABLES CSS
+===================================================== */
 
 :root {
+  /* Colores principales */
+  --color-primario: #0a192f;
+  --color-secundario: #007bff;
+  --color-acento: #00b4d8;
 
-    --color-primario: #0A192F;
-    --color-secundario: #007BFF;
-    --color-acento: #00B4D8;
-
-    --color-fondo: #F5F7FA;
-    --color-texto: #1A1A2E;
-    --color-blanco: #FFFFFF;
-
-    --color-gris: #6B7280;
+  /* Colores generales */
+  --color-fondo: #f5f7fa;
+  --color-texto: #1a1a2e;
+  --color-blanco: #ffffff;
+  --color-gris: #6b7280;
 
   /* Fuentes */
-  --font-title: 'Poppins', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  /* Tamaños de fuente */
-  --size-title: 2.5rem;    /* 40px base */
-  --size-body: 1rem;       /* 16px base */
+  --font-title: "Poppins", sans-serif;
+  --font-body: "Inter", sans-serif;
 
+  /* Tipografía responsiva: clamp(mínimo, preferido, máximo) */
+  --size-body: 1rem;
+  --size-h1: clamp(2.2rem, 1.4rem + 4vw, 4.8rem);
+  --size-h2: clamp(1.8rem, 1.5rem + 1vw, 2.2rem);
+  --size-h3: clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem);
 
-    --sombra: 0 10px 30px rgba(0, 0, 0, 0.1);
+  /* Espaciado responsivo */
+  --gutter: clamp(18px, 5vw, 40px); /* márgenes laterales */
+  --espacio-seccion: clamp(45px, 7vw, 60px); /* arriba/abajo de cada sección */
 
-    --radio: 15px;
-
-    --transicion: 0.3s ease;
-
-    --max-width: 1200px;
+  /* Efectos y medidas */
+  --sombra: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --radio: 15px;
+  --transicion: 0.3s ease;
+  --max-width: 1200px;
 }
 
-/* ===================================
-   RESET
-=================================== */
+/* =====================================================
+   2. RESET Y ESTILOS GENERALES
+===================================================== */
 
 * {
-
-    margin: 0;
-    padding: 0;
-
-    box-sizing: border-box;
-
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
-
-/* ===================================
-   GENERAL
-=================================== */
 
 html {
-
-    scroll-behavior: smooth;
-
-}
-
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;}
 
 body {
-
-    font-family: var(--font-body);
-
-    background-color: var(--color-fondo);
-
-    color: var(--color-texto);
-
-    line-height: 1.6;
-
+  font-family: var(--font-body);
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.6;
+  font-size: var(--size-body);
 }
 
-header {
-    background-color: var(--color-primario);
-    padding: 20px;
+/* Títulos: la fuente se define una sola vez */
+h1,
+h2,
+h3 {
+  font-family: var(--font-title);
+}
+
+/* Imágenes adaptables */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Los campos heredan la fuente del sitio */
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
+/* Todas las secciones (menos el hero) comparten espaciado y títulos */
+main > section:not(.hero) {
+  scroll-margin-top: 0;
+  padding: var(--espacio-seccion) var(--gutter);
+  text-align: center;
+
+  h2 {
+    font-size: var(--size-h2);
+    color: var(--color-primario);
+    margin-bottom: 15px;
+  }
+}
+
+/* Contenedor común para limitar el ancho del contenido */
+.encabezado-seccion {
+  max-width: var(--max-width);
+  margin: 0 auto 40px;
+}
+
+/* =====================================================
+   3. HEADER Y NAVEGACIÓN PRINCIPAL
+   Flex + wrap: el logo y el menú van juntos y centrados.
+   Si no caben en una línea, el menú baja solo debajo del
+   logo, sin necesidad de media queries.
+===================================================== */
+
+body > header {
+  background-color: var(--color-primario);
+  padding: 14px var(--gutter);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px clamp(24px, 5vw, 60px); /* vertical | horizontal */
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.logo {
+  display: inline-flex;
+  flex-shrink: 0;
+
+  img {
+    height: clamp(44px, 6vw, 56px);
+    width: auto;
+  }
 }
 
 .navegacion {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px clamp(12px, 2vw, 20px);
 
-.navegacion a {
+  a {
     color: var(--color-blanco);
     text-decoration: none;
+    font-weight: 600;
+    padding: 10px 6px; /* zona táctil cómoda en móvil */
+    border-radius: 4px;
+    transition: var(--transicion);
+
+    &:hover {
+      color: var(--color-acento);
+    }
+  }
 }
 
-section {
-    padding: 60px 20px;
+/* =====================================================
+   5. ENLACES GENERALES
+   Estados base, hover y focus-visible.
+===================================================== */
+
+a {
+  color: inherit;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--color-acento);
+  outline-offset: 3px;
+}
+
+/* =====================================================
+   6. LISTAS
+   Se eliminan estilos predeterminados cuando se usan
+   como elementos de navegación.
+===================================================== */
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+.navegacion ul,
+.footer-nav ul,
+.legal-links ul {
+  list-style: none;
+}
+
+/* =====================================================
+   7. HERO PRINCIPAL
+   Base móvil: texto centrado, botones apilados.
+===================================================== */
+
+.hero {
+  position: relative;
+
+  /* Altura mínima: vh de respaldo y svh para navegadores móviles */
+  min-height: max(600px, 85svh);
+
+  display: flex;
+  align-items: center;
+
+  padding: clamp(80px, 10vw, 110px) clamp(18px, 7vw, 120px);
+  overflow: hidden;
+  isolation: isolate;
+
+  background-color: var(--color-primario);
+  color: var(--color-blanco);
+  text-align: center;
+
+  /* Imagen de fondo responsive (el <picture> elige el archivo) */
+  .hero-imagen {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  /* Capa oscura sobre la imagen */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(10, 25, 47, 0.7);
+  }
+
+  .hero-contenido {
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .hero-etiqueta {
+    color: var(--color-acento);
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-size: var(--size-h1);
+    line-height: 1.15;
+    margin-bottom: 24px;
+  }
+
+  .hero-descripcion {
+    max-width: 650px;
+    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
+    margin-bottom: 35px;
+  }
+
+  /* Móvil: botones uno debajo del otro, a todo el ancho */
+  .hero-botones {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+}
+
+/* =====================================================
+   8. BOTONES DEL HERO
+===================================================== */
+
+.boton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 50px;
+  padding: 14px 24px;
+
+  border: 2px solid transparent;
+  border-radius: var(--radio);
+
+  text-decoration: none;
+  font-weight: 700;
+  text-align: center;
+
+  transition: var(--transicion);
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+}
+
+.boton-primario {
+  background-color: var(--color-secundario);
+  color: var(--color-blanco);
+
+  &:hover {
+    background-color: var(--color-acento);
+    color: var(--color-primario);
+  }
+}
+
+.boton-secundario {
+  background-color: transparent;
+  color: var(--color-blanco);
+  border-color: var(--color-blanco);
+
+  &:hover {
+    background-color: var(--color-blanco);
+    color: var(--color-primario);
+  }
+}
+
+/* =====================================================
+   9. SECCIÓN NOSOTROS
+   (el h2 y el padding vienen de "main > section")
+===================================================== */
+
+#nosotros {
+  background-color: var(--color-blanco);
+
+  p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.05rem;
+  }
+}
+
+/* =====================================================
+   10. SECCIÓN SERVICIOS
+   Base móvil: una columna.
+===================================================== */
+
+#servicios {
+  background-color: var(--color-fondo);
+}
+
+.servicios-grid {
+  --gap-servicios: clamp(16px, 2.5vw, 25px);
+
+  display: grid;
+  /* Grid responsive: crea automáticamente las columnas necesarias */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: var(--gap-servicios);
+
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.tarjeta-servicio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-width: 0;
+  padding: clamp(25px, 4vw, 30px) clamp(20px, 3vw, 25px);
+
+  background-color: var(--color-blanco);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+
+  transition: var(--transicion);
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+
+  h3 {
+    color: var(--color-secundario);
+    font-size: var(--size-h3);
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
+}
+
+/* =====================================================
+   11. SECCIÓN CONTACTO
+===================================================== */
+
+#contacto {
+  background-color: var(--color-primario);
+  color: var(--color-blanco);
+
+  h2 {
+    color: var(--color-blanco);
+  }
+
+  > p {
+    color: #d1d5db;
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.05rem;
+  }
+}
+
+/* =====================================================
+   12. FORMULARIO DE CONTACTO
+===================================================== */
+
+.formulario-contacto {
+  width: 100%;
+  max-width: 700px;
+
+  margin: clamp(30px, 5vw, 40px) auto 0;
+  padding: clamp(25px, 4vw, 35px) clamp(20px, 4vw, 35px);
+
+  background-color: var(--color-blanco);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+
+  text-align: left;
+}
+
+.campo {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--color-texto);
+    font-weight: 600;
+  }
+
+  input,
+  select,
+  textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+
+    padding: 12px 15px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    background-color: #f9fafb;
+    color: var(--color-texto);
+
+    /* 16px mínimo: evita el zoom automático en iPhone */
+    font-size: 1rem;
+
+    transition: var(--transicion);
+
+    &:focus {
+      border-color: var(--color-secundario);
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+      background-color: var(--color-blanco);
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 130px;
+  }
+}
+
+/* =====================================================
+   13. BOTÓN DEL FORMULARIO
+===================================================== */
+
+.formulario-contacto button {
+  display: block;
+  width: 100%;
+
+  padding: 14px 20px;
+
+  border: none;
+  border-radius: 8px;
+
+  background-color: var(--color-secundario);
+  color: var(--color-blanco);
+
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: var(--transicion);
+
+  &:hover {
+    background-color: var(--color-acento);
+    color: var(--color-primario);
+    transform: translateY(-2px);
+  }
+}
+
+/* =====================================================
+   14. FOOTER
+===================================================== */
+
+footer {
+  background-color: #06111f;
+  color: var(--color-blanco);
+
+  padding: clamp(40px, 6vw, 50px) var(--gutter) clamp(20px, 3vw, 25px);
+  text-align: center;
+
+  section {
+    padding: 0 0 25px;
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #aab4c3;
+    }
+  }
+}
+
+.footer-nav,
+.legal-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  a {
+    text-decoration: none;
+    transition: var(--transicion);
+  }
+}
+
+.footer-nav {
+  gap: 10px clamp(15px, 3vw, 25px);
+  margin-bottom: 25px;
+
+  a {
+    color: #d1d5db;
+
+    &:hover {
+      color: var(--color-acento);
+    }
+  }
+}
+
+.legal-links {
+  gap: 10px clamp(15px, 2.5vw, 20px);
+  margin-bottom: 30px;
+
+  a {
+    color: #aab4c3;
+    font-size: 0.9rem;
+
+    &:hover {
+      color: var(--color-blanco);
+    }
+  }
+}
+
+.copyright {
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  color: #7f8a99;
+  font-size: 0.85rem;
+}
+
+/* Logo del footer (si lo usas en lugar del h2) */
+.logo-footer {
+  width: 210px;
+  margin: 0 auto 10px;
+}
+
+/* Texto solo para lectores de pantalla / SEO */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* =====================================================
+   15. ACCESIBILIDAD: FOCO VISIBLE
+   Una sola regla para todos los enlaces y botones.
+===================================================== */
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-acento);
+  outline-offset: 4px;
+}
+
+.campo input:focus-visible,
+.campo select:focus-visible,
+.campo textarea:focus-visible {
+  outline: 2px solid var(--color-secundario);
+  outline-offset: 2px;
+}
+
+/* =====================================================
+   16. TABLET (desde 600px)
+   - Hero alineado a la izquierda, botones en fila
+   - Servicios en 2 columnas
+===================================================== */
+
+@media (min-width: 600px) {
+  .hero {
+    text-align: left;
+
+    &::before {
+      background: linear-gradient(
+        90deg,
+        rgba(10, 25, 47, 0.85),
+        rgba(10, 25, 47, 0.55)
+      );
+    }
+
+    .hero-botones {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+
+  /* El Grid ya utiliza auto-fit + minmax(), por lo que
+     no necesita una cantidad fija de columnas. */
+}
+
+/* =====================================================
+   17. PC (desde 1024px)
+   - Servicios en 3 columnas
+===================================================== */
+
+@media (min-width: 1024px) {
+  /* auto-fit + minmax() continúa controlando las columnas */
+}
+
+/* =====================================================
+   18. REDUCCIÓN DE MOVIMIENTO
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =====================================================
+   19. CONTAINER QUERIES (MEJORA OPCIONAL)
+   Permite que componentes futuros respondan al ancho
+   de su contenedor y no solo al ancho de la ventana.
+===================================================== */
+
+.servicios-grid {
+  container-type: inline-size;
+  container-name: servicios;
+}
+
+@container servicios (min-width: 700px) {
+  .tarjeta-servicio {
+    padding-inline: clamp(20px, 3cqi, 30px);
+  }
 }
