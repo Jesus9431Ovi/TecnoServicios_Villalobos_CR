@@ -1,173 +1,181 @@
-/* =====================================================
+/* =========================================================
    PROYECTO: TecnoServicios Villalobos CR
-   ARCHIVO: estilos.css
 
-   Enfoque: MOBILE-FIRST
-   - Los estilos base son para móvil (< 600px).
-   - Se amplía con min-width: 600px (tablet) y 1024px (PC).
-   - Se usan clamp(), Flexbox y Grid para que el diseño
-     se adapte solo, con pocos media queries.
-===================================================== */
+   Conceptos clave usados en este archivo:
+   - Variables CSS: --nombre definidas en :root y usadas con var(--nombre).
+   - clamp(min, ideal, max): valor que crece con la pantalla sin pasar de un mínimo/máximo.
+   - Flexbox: acomoda elementos en fila/columna (display:flex).
+   - Grid: acomoda elementos en filas y columnas (display:grid).
+   - Mobile first: el CSS base es para móvil; los @media añaden cambios para pantallas mayores.
+========================================================= */
 
-/* =====================================================
+/* =========================================================
    1. VARIABLES CSS
-===================================================== */
-
+   Se definen una vez y se reutilizan en todo el archivo.
+========================================================= */
 :root {
-  /* Colores principales */
-  --color-primario: #0a192f;
-  --color-secundario: #007bff;
-  --color-acento: #00b4d8;
+  /* :root = el elemento <html>; las variables quedan globales */
+  /* Colores de marca */
+  --color-primario: #0a192f; /* azul oscuro: encabezado, hero, contacto */
+  --color-secundario: #007bff; /* azul brillante: botones, títulos de tarjeta */
+  --color-acento: #00b4d8; /* celeste: hover y foco */
 
-  /* Colores generales */
-  --color-fondo: #f5f7fa;
-  --color-texto: #1a1a2e;
+  /* Fondos y textos */
+  --color-fondo: #f5f7fa; /* gris muy claro de fondo general */
+  --color-texto: #1a1a2e; /* color del texto normal */
   --color-blanco: #ffffff;
-  --color-gris: #6b7280;
+  --color-gris: #6b7280; /* reservado para texto secundario (no se usa aún) */
+  --color-borde: #d1d5db; /* bordes de inputs y texto claro sobre fondo oscuro */
+  --color-texto-suave: #aab4c3; /* texto atenuado en el footer */
 
-  /* Fuentes */
+  /* Tipografías: deben estar cargadas en el HTML o en otro CSS */
   --font-title: "Poppins", sans-serif;
   --font-body: "Inter", sans-serif;
 
-  /* Tipografía responsiva: clamp(mínimo, preferido, máximo) */
-  --size-body: 1rem;
+  /* Tamaños de texto. Los títulos son fluidos con clamp():
+     mínimo, preferido (usa vw = % del ancho de pantalla) y máximo. */
+  --size-body: 1rem; /* 1rem = 16px normalmente */
   --size-h1: clamp(2.2rem, 1.4rem + 4vw, 4.8rem);
   --size-h2: clamp(1.8rem, 1.5rem + 1vw, 2.2rem);
   --size-h3: clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem);
 
-  /* Espaciado responsivo */
-  --gutter: clamp(18px, 5vw, 40px); /* márgenes laterales */
-  --espacio-seccion: clamp(45px, 7vw, 60px); /* arriba/abajo de cada sección */
+  /* Espaciados fluidos */
+  --gutter: clamp(18px, 5vw, 40px); /* margen lateral de las secciones */
+  --espacio-seccion: clamp(
+    45px,
+    7vw,
+    60px
+  ); /* margen arriba/abajo de las secciones */
 
-  /* Efectos y medidas */
-  --sombra: 0 10px 30px rgba(0, 0, 0, 0.1);
-  --radio: 15px;
-  --transicion: 0.3s ease;
-  --max-width: 1200px;
+  /* Efectos y medidas comunes */
+  --sombra: 0 10px 30px rgba(0, 0, 0, 0.1); /* desplazX desplazY difuminado color */
+  --radio: 15px; /* esquinas redondeadas */
+  --transicion: 0.3s ease; /* duración y curva de animaciones */
+  --max-width: 1200px; /* ancho máximo del contenido */
 }
 
-/* =====================================================
-   2. RESET Y ESTILOS GENERALES
-===================================================== */
-
+/* =========================================================
+   2. REINICIO Y ESTILOS GENERALES
+========================================================= */
 * {
-  margin: 0;
+  /* * = todos los elementos */
+  box-sizing: border-box; /* padding y borde cuentan dentro del width (evita desbordes) */
+  margin: 0; /* quita márgenes por defecto del navegador */
   padding: 0;
-  box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 80px;}
-
-body {
-  font-family: var(--font-body);
-  background-color: var(--color-fondo);
-  color: var(--color-texto);
-  line-height: 1.6;
-  font-size: var(--size-body);
+  scroll-behavior: smooth; /* los enlaces #ancla se desplazan suavemente */
+  scroll-padding-top: clamp(
+    4.5rem,
+    7vw,
+    5rem
+  ); /* deja espacio arriba para que el header fijo no tape el título de la sección */
 }
 
-/* Títulos: la fuente se define una sola vez */
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  line-height: 1.6; /* interlineado cómodo para leer */
+}
+
 h1,
 h2,
 h3 {
-  font-family: var(--font-title);
+  font-family: var(--font-title); /* títulos con la fuente Poppins */
 }
 
-/* Imágenes adaptables */
 img {
-  display: block;
-  max-width: 100%;
-  height: auto;
+  display: block; /* quita el pequeño espacio bajo las imágenes */
+  max-width: 100%; /* nunca más anchas que su contenedor */
+  height: auto; /* conserva la proporción */
 }
 
-/* Los campos heredan la fuente del sitio */
 input,
 select,
 textarea,
 button {
-  font: inherit;
+  font: inherit; /* los controles de formulario heredan la fuente del sitio */
 }
 
-/* Todas las secciones (menos el hero) comparten espaciado y títulos */
+/* Todas las <section> hijas directas de <main> excepto la del hero */
 main > section:not(.hero) {
-  scroll-margin-top: 0;
-  padding: var(--espacio-seccion) var(--gutter);
+  padding: var(--espacio-seccion) var(--gutter); /* vertical | horizontal */
   text-align: center;
-
-  h2 {
-    font-size: var(--size-h2);
-    color: var(--color-primario);
-    margin-bottom: 15px;
-  }
 }
 
-/* Contenedor común para limitar el ancho del contenido */
+main > section:not(.hero) h2 {
+  margin-bottom: 15px;
+  color: var(--color-primario);
+  font-size: var(--size-h2);
+}
+
+/* Bloque de título + subtítulo de cada sección */
 .encabezado-seccion {
   max-width: var(--max-width);
-  margin: 0 auto 40px;
+  margin: 0 auto 40px; /* auto a los lados = centrado; 40px abajo */
 }
 
-/* =====================================================
-   3. HEADER Y NAVEGACIÓN PRINCIPAL
-   Flex + wrap: el logo y el menú van juntos y centrados.
-   Si no caben en una línea, el menú baja solo debajo del
-   logo, sin necesidad de media queries.
-===================================================== */
-
-body > header {
-  background-color: var(--color-primario);
-  padding: 14px var(--gutter);
+/* =========================================================
+   3. ENCABEZADO Y NAVEGACIÓN PRINCIPAL
+========================================================= */
+.encabezado {
+  position: sticky; /* se queda pegado arriba al hacer scroll */
+  top: 0;
+  z-index: 999; /* queda por encima de otros elementos */
 
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px clamp(24px, 5vw, 60px); /* vertical | horizontal */
-  position: sticky;
-  top: 0;
-  z-index: 999;
+  flex-wrap: wrap; /* si no caben, pasan a otra línea (el menú móvil baja) */
+  align-items: center; /* centra verticalmente */
+  justify-content: center; /* centra horizontalmente */
+  gap: 12px clamp(24px, 5vw, 60px); /* separación: vertical | horizontal */
+
+  padding: 14px var(--gutter);
+  background-color: var(--color-primario);
 }
 
 .logo {
   display: inline-flex;
-  flex-shrink: 0;
+  flex-shrink: 0; /* el logo no se encoge si falta espacio */
+}
 
-  img {
-    height: clamp(44px, 6vw, 56px);
-    width: auto;
-  }
+.logo img {
+  width: auto;
+  height: clamp(44px, 6vw, 56px); /* altura fluida; el ancho se ajusta solo */
 }
 
 .navegacion {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   gap: 8px clamp(12px, 2vw, 20px);
-
-  a {
-    color: var(--color-blanco);
-    text-decoration: none;
-    font-weight: 600;
-    padding: 10px 6px; /* zona táctil cómoda en móvil */
-    border-radius: 4px;
-    transition: var(--transicion);
-
-    &:hover {
-      color: var(--color-acento);
-    }
-  }
 }
 
-/* =====================================================
-   5. ENLACES GENERALES
-   Estados base, hover y focus-visible.
-===================================================== */
+.navegacion a {
+  padding: 10px 6px; /* área de clic más cómoda */
+  border-radius: 4px;
+  color: var(--color-blanco);
+  font-weight: 600;
+  text-decoration: none; /* sin subrayado */
+  transition:                              /* anima el cambio de color al pasar el mouse */
+    color var(--transicion),
+    background-color var(--transicion);
+}
 
+.navegacion a:hover {
+  /* :hover = cuando el mouse está encima */
+  color: var(--color-acento);
+  background-color: rgba(255, 255, 255, 0.08); /* blanco casi transparente */
+}
+
+/* =========================================================
+   4. ENLACES Y ACCESIBILIDAD
+========================================================= */
 a {
-  color: inherit;
+  color: inherit; /* los enlaces toman el color del texto que los rodea */
 }
 
 a:focus-visible,
@@ -175,476 +183,490 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid var(--color-acento);
-  outline-offset: 3px;
+  outline: 3px solid var(--color-acento); /* contorno visible */
+  outline-offset: 3px; /* separado del elemento */
 }
 
-/* =====================================================
-   6. LISTAS
-   Se eliminan estilos predeterminados cuando se usan
-   como elementos de navegación.
-===================================================== */
-
-ul,
-ol {
-  margin: 0;
-  padding: 0;
-}
-
-.navegacion ul,
-.footer-nav ul,
-.legal-links ul {
-  list-style: none;
-}
-
-/* =====================================================
-   7. HERO PRINCIPAL
-   Base móvil: texto centrado, botones apilados.
-===================================================== */
-
-.hero {
-  position: relative;
-
-  /* Altura mínima: vh de respaldo y svh para navegadores móviles */
-  min-height: max(600px, 85svh);
-
-  display: flex;
-  align-items: center;
-
-  padding: clamp(80px, 10vw, 110px) clamp(18px, 7vw, 120px);
-  overflow: hidden;
-  isolation: isolate;
-
-  background-color: var(--color-primario);
-  color: var(--color-blanco);
-  text-align: center;
-
-  /* Imagen de fondo responsive (el <picture> elige el archivo) */
-  .hero-imagen {
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
-  }
-
-  /* Capa oscura sobre la imagen */
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: rgba(10, 25, 47, 0.7);
-  }
-
-  .hero-contenido {
-    width: 100%;
-    max-width: 800px;
-  }
-
-  .hero-etiqueta {
-    color: var(--color-acento);
-    font-weight: 700;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-  }
-
-  h1 {
-    font-size: var(--size-h1);
-    line-height: 1.15;
-    margin-bottom: 24px;
-  }
-
-  .hero-descripcion {
-    max-width: 650px;
-    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
-    margin-bottom: 35px;
-  }
-
-  /* Móvil: botones uno debajo del otro, a todo el ancho */
-  .hero-botones {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-}
-
-/* =====================================================
-   8. BOTONES DEL HERO
-===================================================== */
-
-.boton {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-
-  min-height: 50px;
-  padding: 14px 24px;
-
-  border: 2px solid transparent;
-  border-radius: var(--radio);
-
-  text-decoration: none;
-  font-weight: 700;
-  text-align: center;
-
-  transition: var(--transicion);
-
-  &:hover {
-    transform: translateY(-3px);
-  }
-}
-
-.boton-primario {
-  background-color: var(--color-secundario);
-  color: var(--color-blanco);
-
-  &:hover {
-    background-color: var(--color-acento);
-    color: var(--color-primario);
-  }
-}
-
-.boton-secundario {
-  background-color: transparent;
-  color: var(--color-blanco);
-  border-color: var(--color-blanco);
-
-  &:hover {
-    background-color: var(--color-blanco);
-    color: var(--color-primario);
-  }
-}
-
-/* =====================================================
-   9. SECCIÓN NOSOTROS
-   (el h2 y el padding vienen de "main > section")
-===================================================== */
-
-#nosotros {
-  background-color: var(--color-blanco);
-
-  p {
-    max-width: 800px;
-    margin: 0 auto;
-    font-size: 1.05rem;
-  }
-}
-
-/* =====================================================
-   10. SECCIÓN SERVICIOS
-   Base móvil: una columna.
-===================================================== */
-
-#servicios {
-  background-color: var(--color-fondo);
-}
-
-.servicios-grid {
-  --gap-servicios: clamp(16px, 2.5vw, 25px);
-
-  display: grid;
-  /* Grid responsive: crea automáticamente las columnas necesarias */
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
-  gap: var(--gap-servicios);
-
-  max-width: var(--max-width);
-  margin: 0 auto;
-}
-
-.tarjeta-servicio {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  min-width: 0;
-  padding: clamp(25px, 4vw, 30px) clamp(20px, 3vw, 25px);
-
-  background-color: var(--color-blanco);
-  border-radius: var(--radio);
-  box-shadow: var(--sombra);
-
-  transition: var(--transicion);
-
-  &:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-  }
-
-  h3 {
-    color: var(--color-secundario);
-    font-size: var(--size-h3);
-    margin-bottom: 15px;
-  }
-
-  p {
-    font-size: 0.95rem;
-  }
-}
-
-/* =====================================================
-   11. SECCIÓN CONTACTO
-===================================================== */
-
-#contacto {
-  background-color: var(--color-primario);
-  color: var(--color-blanco);
-
-  h2 {
-    color: var(--color-blanco);
-  }
-
-  > p {
-    color: #d1d5db;
-    max-width: 700px;
-    margin: 0 auto;
-    font-size: 1.05rem;
-  }
-}
-
-/* =====================================================
-   12. FORMULARIO DE CONTACTO
-===================================================== */
-
-.formulario-contacto {
-  width: 100%;
-  max-width: 700px;
-
-  margin: clamp(30px, 5vw, 40px) auto 0;
-  padding: clamp(25px, 4vw, 35px) clamp(20px, 4vw, 35px);
-
-  background-color: var(--color-blanco);
-  border-radius: var(--radio);
-  box-shadow: var(--sombra);
-
-  text-align: left;
-}
-
-.campo {
-  margin-bottom: 20px;
-
-  label {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--color-texto);
-    font-weight: 600;
-  }
-
-  input,
-  select,
-  textarea {
-    display: block;
-    width: 100%;
-    min-width: 0;
-
-    padding: 12px 15px;
-
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-
-    background-color: #f9fafb;
-    color: var(--color-texto);
-
-    /* 16px mínimo: evita el zoom automático en iPhone */
-    font-size: 1rem;
-
-    transition: var(--transicion);
-
-    &:focus {
-      border-color: var(--color-secundario);
-      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
-      background-color: var(--color-blanco);
-    }
-  }
-
-  textarea {
-    resize: vertical;
-    min-height: 130px;
-  }
-}
-
-/* =====================================================
-   13. BOTÓN DEL FORMULARIO
-===================================================== */
-
-.formulario-contacto button {
-  display: block;
-  width: 100%;
-
-  padding: 14px 20px;
-
-  border: none;
-  border-radius: 8px;
-
-  background-color: var(--color-secundario);
-  color: var(--color-blanco);
-
-  font-weight: 600;
-
-  cursor: pointer;
-  transition: var(--transicion);
-
-  &:hover {
-    background-color: var(--color-acento);
-    color: var(--color-primario);
-    transform: translateY(-2px);
-  }
-}
-
-/* =====================================================
-   14. FOOTER
-===================================================== */
-
-footer {
-  background-color: #06111f;
-  color: var(--color-blanco);
-
-  padding: clamp(40px, 6vw, 50px) var(--gutter) clamp(20px, 3vw, 25px);
-  text-align: center;
-
-  section {
-    padding: 0 0 25px;
-
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-    }
-
-    p {
-      color: #aab4c3;
-    }
-  }
-}
-
-.footer-nav,
-.legal-links {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-
-  a {
-    text-decoration: none;
-    transition: var(--transicion);
-  }
-}
-
-.footer-nav {
-  gap: 10px clamp(15px, 3vw, 25px);
-  margin-bottom: 25px;
-
-  a {
-    color: #d1d5db;
-
-    &:hover {
-      color: var(--color-acento);
-    }
-  }
-}
-
-.legal-links {
-  gap: 10px clamp(15px, 2.5vw, 20px);
-  margin-bottom: 30px;
-
-  a {
-    color: #aab4c3;
-    font-size: 0.9rem;
-
-    &:hover {
-      color: var(--color-blanco);
-    }
-  }
-}
-
-.copyright {
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-
-  color: #7f8a99;
-  font-size: 0.85rem;
-}
-
-/* Logo del footer (si lo usas en lugar del h2) */
-.logo-footer {
-  width: 210px;
-  margin: 0 auto 10px;
-}
-
-/* Texto solo para lectores de pantalla / SEO */
-.visually-hidden {
+/* Texto oculto visualmente, pero disponible para lectores de pantalla.
+   Úsalo solo en elementos que deban tener un nombre accesible adicional. */
+/* .visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+} */
+
+/* =========================================================
+   5. HERO PRINCIPAL Y BOTONES
+========================================================= */
+.hero {
+  position: relative; /* referencia para posicionar la imagen y la capa oscura */
+  isolation: isolate; /* crea un contexto de apilamiento propio (los z-index negativos no se escapan) */
+  display: flex;
+  align-items: center; /* contenido centrado verticalmente */
+  overflow: hidden; /* recorta lo que sobresalga */
+
+  min-height: max(
+    600px,
+    85svh
+  ); /* mínimo 600px o 85% de la altura visible, lo que sea mayor */
+  padding: clamp(80px, 10vw, 110px) clamp(18px, 7vw, 120px);
+
+  background-color: var(
+    --color-primario
+  ); /* color de respaldo si la imagen no carga */
+  color: var(--color-blanco);
+  text-align: center; /* en móvil centrado */
 }
 
-/* =====================================================
-   15. ACCESIBILIDAD: FOCO VISIBLE
-   Una sola regla para todos los enlaces y botones.
-===================================================== */
-
-a:focus-visible,
-button:focus-visible {
-  outline: 3px solid var(--color-acento);
-  outline-offset: 4px;
+/* Contenedor de la imagen de fondo: ocupa todo el hero, detrás de todo */
+.hero-imagen {
+  position: absolute;
+  inset: 0; /* atajo de top/right/bottom/left: 0 */
+  z-index: -2; /* capa más profunda */
 }
 
-.campo input:focus-visible,
-.campo select:focus-visible,
-.campo textarea:focus-visible {
-  outline: 2px solid var(--color-secundario);
-  outline-offset: 2px;
+.hero-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* llena el área recortando sin deformar */
+  object-position: center; /* recorta desde el centro */
 }
 
-/* =====================================================
-   16. TABLET (desde 600px)
-   - Hero alineado a la izquierda, botones en fila
-   - Servicios en 2 columnas
-===================================================== */
+/* Capa oscura semitransparente sobre la imagen para que el texto se lea bien */
+.hero::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1; /* entre la imagen (-2) y el texto */
+  background: rgba(10, 25, 47, 0.7); /* azul oscuro al 70% */
+  content: ""; /* obligatorio para que ::before se muestre */
+}
 
-@media (min-width: 600px) {
-  .hero {
-    text-align: left;
+.hero-contenido {
+  width: 100%;
+  max-width: 800px; /* limita el ancho del texto para leer mejor */
+}
 
-    &::before {
-      background: linear-gradient(
-        90deg,
-        rgba(10, 25, 47, 0.85),
-        rgba(10, 25, 47, 0.55)
-      );
-    }
+.hero-etiqueta {
+  /* texto pequeño sobre el título */
+  margin-bottom: 20px;
+  color: var(--color-acento);
+  font-weight: 700;
+  letter-spacing: 2px; /* separa las letras */
+  text-transform: uppercase; /* MAYÚSCULAS */
+}
 
-    .hero-botones {
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
+.hero h1 {
+  margin-bottom: 24px;
+  font-size: var(--size-h1);
+  line-height: 1.15; /* interlineado más cerrado para títulos grandes */
+}
+
+.hero-descripcion {
+  max-width: 650px;
+  margin-bottom: 35px;
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
+}
+
+.hero-botones {
+  display: flex;
+  flex-direction: column; /* en móvil: botones apilados */
+  gap: 18px;
+}
+
+/* Estilo base de todos los botones (enlaces con aspecto de botón) */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center; /* texto centrado dentro del botón */
+  min-height: 50px; /* tamaño táctil adecuado */
+  padding: 14px 24px;
+  border: 2px solid transparent; /* reserva el borde para que no "salte" en la variante secundaria */
+  border-radius: var(--radio);
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    transform var(--transicion),
+    background-color var(--transicion),
+    color var(--transicion);
+}
+
+.boton:hover {
+  transform: translateY(-3px); /* sube 3px al pasar el mouse */
+}
+
+/* Botón principal: relleno azul */
+.boton-primario {
+  background-color: var(--color-secundario);
+  color: var(--color-blanco);
+}
+
+.boton-primario:hover {
+  background-color: var(--color-acento);
+  color: var(--color-primario);
+}
+
+/* Botón secundario: solo contorno blanco, se rellena en hover */
+.boton-secundario {
+  border-color: var(--color-blanco);
+  background-color: transparent;
+  color: var(--color-blanco);
+}
+
+.boton-secundario:hover {
+  background-color: var(--color-blanco);
+  color: var(--color-primario);
+}
+
+/* =========================================================
+   6. SECCIONES DE CONTENIDO
+========================================================= */
+#nosotros {
+  /* # = selecciona por id */
+  background-color: var(
+    --color-blanco
+  ); /* fondo blanco para alternar con las secciones grises */
+}
+
+#nosotros p {
+  max-width: 800px;
+  margin: 0 auto; /* párrafo centrado y con ancho cómodo de lectura */
+  font-size: 1.05rem;
+}
+
+#servicios {
+  background-color: var(--color-fondo);
+}
+
+/* Cuadrícula responsiva de tarjetas */
+.servicios-grid {
+  container-name: servicios; /* nombre del contenedor (para @container, hoy comentado) */
+  container-type: inline-size; /* permite que los hijos respondan al ANCHO de este contenedor */
+  --gap-servicios: clamp(
+    16px,
+    2.5vw,
+    25px
+  ); /* variable local, solo para este elemento */
+
+  display: grid;
+  /* repeat(auto-fit, minmax(...)): crea tantas columnas como quepan.
+     Cada columna mide mínimo 250px (o 100% si la pantalla es menor) y se reparte el resto con 1fr.
+     Así no hacen falta media queries para pasar de 1 a 2, 3 o 4 columnas. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: var(--gap-servicios);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.tarjeta-servicio {
+  display: flex;
+  flex-direction: column; /* contenido en vertical */
+  align-items: center; /* centrado horizontal */
+  min-width: 0; /* evita que el contenido desborde la celda del grid */
+  padding: clamp(25px, 4vw, 30px) clamp(20px, 3vw, 25px);
+  border-radius: var(--radio);
+  background-color: var(--color-blanco);
+  box-shadow: var(--sombra);
+  transition:
+    transform var(--transicion),
+    box-shadow var(--transicion);
+}
+
+.tarjeta-servicio:hover {
+  transform: translateY(-6px); /* la tarjeta "flota" */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); /* sombra más marcada */
+}
+
+.tarjeta-servicio h3 {
+  margin-bottom: 15px;
+  color: var(--color-secundario);
+  font-size: var(--size-h3);
+}
+
+.tarjeta-servicio p {
+  font-size: 0.95rem;
+}
+
+/* =========================================================
+   7. FORMULARIO DE CONTACTO Y MENSAJES
+========================================================= */
+#contacto {
+  background-color: var(--color-primario); /* sección oscura */
+  color: var(--color-blanco);
+}
+
+#contacto h2 {
+  color: var(
+    --color-blanco
+  ); /* sobrescribe el azul oscuro de las demás secciones */
+}
+
+#contacto > p {
+  /* > = solo párrafos hijos directos */
+  max-width: 700px;
+  margin: 0 auto;
+  color: var(--color-borde);
+  font-size: 1.05rem;
+}
+
+.formulario-contacto {
+  width: 100%;
+  max-width: 700px;
+  margin: clamp(30px, 5vw, 40px) auto 0; /* arriba fluido | centrado | 0 abajo */
+  padding: clamp(25px, 4vw, 35px) clamp(20px, 4vw, 35px);
+  border-radius: var(--radio);
+  background-color: var(
+    --color-blanco
+  ); /* tarjeta blanca sobre la sección oscura */
+  color: var(--color-texto);
+  box-shadow: var(--sombra);
+  text-align: left; /* el formulario va alineado a la izquierda aunque la sección esté centrada */
+}
+
+.campo {
+  /* grupo label + input */
+  margin-bottom: 20px;
+}
+
+.campo label {
+  display: block; /* la etiqueta ocupa su propia línea */
+  margin-bottom: 8px;
+  color: var(--color-texto);
+  font-weight: 600;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  display: block;
+  width: 100%; /* ocupan todo el ancho del formulario */
+  min-width: 0;
+  padding: 12px 15px;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  background-color: #f9fafb;
+  color: var(--color-texto);
+  /* 16px evita el zoom automático de iPhone al enfocar un campo */
+  font-size: 1rem;
+  transition:
+    border-color var(--transicion),
+    box-shadow var(--transicion),
+    background-color var(--transicion);
+}
+
+/* Estado al hacer clic/escribir en el campo */
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  border-color: var(--color-secundario);
+  background-color: var(--color-blanco);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15); /* halo azul suave (sin desplazamiento ni difuminado) */
+}
+
+.campo textarea {
+  min-height: 130px;
+  resize: vertical; /* solo se puede estirar hacia abajo, no a los lados */
+}
+
+.formulario-contacto button {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  border: 0;
+  border-radius: 8px;
+  background-color: var(--color-secundario);
+  color: var(--color-blanco);
+  font-weight: 600;
+  cursor: pointer; /* cursor de manita */
+  transition:
+    transform var(--transicion),
+    background-color var(--transicion),
+    color var(--transicion);
+}
+
+.formulario-contacto button:hover {
+  transform: translateY(-2px);
+  background-color: var(--color-acento);
+  color: var(--color-primario);
+}
+
+/* Párrafo de estado que JavaScript rellena al validar. */
+.mensaje-formulario {
+  min-height: 1.5em;                       /* reserva espacio para que el layout no salte cuando aparece el texto */
+  margin-block: 1rem;                      /* margen arriba y abajo */
+  font-weight: 600;
+}
+
+.mensaje-exito {                           /* clase que añade el JS cuando todo es válido */
+  color: #16703c;                          /* verde */
+}
+ 
+.mensaje-error {                           /* clase que añade el JS cuando hay errores */
+  color: #b42318;                          /* rojo */
+}
+
+/* =========================================================
+   8. PIE DE PÁGINA
+========================================================= */
+footer {
+  padding: clamp(40px, 6vw, 50px) var(--gutter) clamp(20px, 3vw, 25px);
+  background-color: #06111f;               /* aún más oscuro que el primario */
+  color: var(--color-blanco);
+  text-align: center;
+}
+
+footer section {
+  padding-bottom: 25px;
+}
+
+footer section h2 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+footer section p {
+  color: var(--color-texto-suave);
+}
+
+/* Ambos grupos de enlaces comparten el mismo tipo de layout */
+.footer-nav,
+.legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-nav a,
+.legal-links a {
+  text-decoration: none;
+  transition: color var(--transicion);
+}
+
+.footer-nav {                              /* enlaces de navegación del pie */
+  gap: 10px clamp(15px, 3vw, 25px);
+  margin-bottom: 25px;
+}
+
+.footer-nav a {
+  color: var(--color-borde);
+}
+
+.footer-nav a:hover {
+  color: var(--color-acento);
+}
+
+.legal-links {                             /* enlaces legales (privacidad, términos...) */
+  gap: 10px clamp(15px, 2.5vw, 20px);
+  margin-bottom: 30px;
+}
+
+.legal-links a {
+  color: var(--color-texto-suave);
+  font-size: 0.9rem;
+}
+
+.legal-links a:hover {
+  color: var(--color-blanco);
+}
+
+.copyright {
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);   /* línea separadora sutil */
+  color: #7f8a99;
+  font-size: 0.85rem;
+}
+
+/* Alternativa visual si en el footer se utiliza una imagen de logo. */
+/* .logo-footer {
+  width: 210px;
+  margin: 0 auto 10px;
+} */
+
+/* =========================================================
+   9. MENÚ MÓVIL Y PUNTOS DE ADAPTACIÓN
+   El botón aparece en pantallas de hasta 767px.
+   A partir de 768px la navegación permanece visible.
+========================================================= */
+.menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-acento);
+  border-radius: var(--radio);
+  background-color: var(--color-secundario);
+  color: var(--color-blanco);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.menu-toggle:hover {
+  background-color: var(--color-acento);
+  color: var(--color-primario);
+}
+
+@media (width < 48rem) {
+  /* En móvil, el logo queda a la izquierda y el botón a la derecha. */
+  .encabezado {
+    justify-content: flex-end;
+    gap: 1rem;
   }
 
-  /* El Grid ya utiliza auto-fit + minmax(), por lo que
-     no necesita una cantidad fija de columnas. */
+  .logo {
+    margin-right: auto;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  /* El menú se oculta hasta que JavaScript añada .is-open. */
+  .navegacion {
+    display: none;
+    flex-basis: 100%;
+    width: 100%;
+  }
+
+  .navegacion.is-open {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .navegacion a {
+    display: block;
+    padding: 0.75rem;
+  }
 }
 
-/* =====================================================
-   17. PC (desde 1024px)
-   - Servicios en 3 columnas
-===================================================== */
+@media (min-width: 37.5rem) {
+  .hero {
+    text-align: left;
+  }
 
-@media (min-width: 1024px) {
-  /* auto-fit + minmax() continúa controlando las columnas */
+  .hero::before {
+    background: linear-gradient(
+      90deg,
+      rgba(10, 25, 47, 0.85),
+      rgba(10, 25, 47, 0.55)
+    );
+  }
+
+  .hero-botones {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }
 
-/* =====================================================
-   18. REDUCCIÓN DE MOVIMIENTO
-===================================================== */
-
+/* =========================================================
+   10. MOVIMIENTO REDUCIDO Y MEJORA OPCIONAL
+========================================================= */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -659,19 +681,14 @@ button:focus-visible {
   }
 }
 
-/* =====================================================
-   19. CONTAINER QUERIES (MEJORA OPCIONAL)
-   Permite que componentes futuros respondan al ancho
-   de su contenedor y no solo al ancho de la ventana.
-===================================================== */
-
-.servicios-grid {
-  container-type: inline-size;
-  container-name: servicios;
-}
-
-@container servicios (min-width: 700px) {
+/* @container servicios (min-width: 700px) {
   .tarjeta-servicio {
     padding-inline: clamp(20px, 3cqi, 30px);
   }
-}
+} */
+
+/* @media (min-width: 768px) {
+  html {
+    scroll-padding-top: 5rem;
+  }
+} */

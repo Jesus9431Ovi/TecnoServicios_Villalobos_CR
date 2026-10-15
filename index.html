@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="es-CR">
   <head>
     <meta charset="UTF-8" />
 
@@ -28,8 +28,17 @@
     <meta name="language" content="Spanish" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="Assets/images/favicon/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="64x64" href="Assets/images/favicon/favicon.png" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="Assets/images/favicon/favicon.svg"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="64x64"
+      href="Assets/images/favicon/favicon.png"
+    />
     <link rel="icon" href="Assets/images/favicon/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="Assets/images/favicon/favicon-180.png" />
 
@@ -45,7 +54,10 @@
   </head>
 
   <body>
-    <header>
+    <!-- =========================================
+     ENCABEZADO Y MENÚ DE NAVEGACIÓN
+     ========================================= -->
+    <header class="encabezado">
       <a
         href="#inicio"
         class="logo"
@@ -59,22 +71,39 @@
         />
       </a>
 
-      <nav class="navegacion" aria-label="Navegación principal">
+      <!-- Botón que abre y cierra el menú en móviles.
+       aria-expanded comienza en false porque está cerrado.
+       aria-controls indica qué elemento controla el botón. -->
+      <button
+        class="menu-toggle"
+        id="menu-toggle"
+        type="button"
+        aria-controls="menu-principal"
+        aria-expanded="false"
+      >
+        <!-- El icono es decorativo; el botón ya tiene un nombre accesible. -->
+        <span aria-hidden="true">☰</span>
+        <span>Menú</span>
+      </button>
+
+      <!-- Navegación principal. El id debe coincidir con aria-controls. -->
+      <nav
+        class="navegacion"
+        id="menu-principal"
+        aria-label="Navegación principal"
+      >
         <a href="#inicio">Inicio</a>
-
         <a href="#nosotros">Nosotros</a>
-
         <a href="#servicios">Servicios</a>
-
         <a href="#contacto">Contacto</a>
       </nav>
     </header>
-    <main>
+    <main id="contenido" tabindex="-1">
       <!-- =========================
      HERO PRINCIPAL
 ========================== -->
 
-      <section id="inicio" class="hero">
+      <section id="inicio" class="hero" aria-labelledby="hero-titulo">
         <!-- Imagen responsive -->
 
         <picture class="hero-imagen">
@@ -90,7 +119,7 @@
 
           <img
             src="Assets/images/hero-desktop_1598x900.webp"
-            alt="Espacio de trabajo tecnológico con equipos informáticos"
+            alt=" "
             fetchpriority="high"
           />
         </picture>
@@ -100,7 +129,7 @@
         <article class="hero-contenido">
           <p class="hero-etiqueta">SOLUCIONES TECNOLÓGICAS</p>
 
-          <h1>TecnoServicios Villalobos CR</h1>
+          <h1 class="hero-title">TecnoServicios Villalobos CR</h1>
 
           <p class="hero-descripcion">
             Soluciones informáticas, soporte técnico y servicios tecnológicos
@@ -119,7 +148,7 @@
         </article>
       </section>
 
-      <section id="nosotros">
+      <section id="nosotros" aria-labelledby="nosotros-titulo">
         <h2>Sobre Nosotros</h2>
 
         <p>
@@ -129,13 +158,13 @@
         </p>
       </section>
 
-      <section id="servicios" class="seccion-servicios">
+      <section id="servicios" class="seccion-servicios" aria-labelledby="servicios-titulo">
         <header class="encabezado-seccion">
           <h2>Nuestros Servicios</h2>
           <p>Soluciones tecnológicas para tus necesidades.</p>
         </header>
 
-        <section class="servicios-grid" aria-label="Lista de servicios">
+        <section class="servicios-grid"  >
           <article class="tarjeta-servicio">
             <h3>Soporte Técnico</h3>
             <p>Mantenimiento, reparación y configuración de equipos.</p>
@@ -153,12 +182,12 @@
         </section>
       </section>
 
-      <section id="contacto">
+      <section id="contacto" aria-labelledby="contacto-titulo">
         <h2>Contacto</h2>
 
         <p>Solicita información sobre nuestros servicios informáticos.</p>
 
-        <form class="formulario-contacto">
+        <form id="formulario-contacto" class="formulario-contacto" aria-labelledby="contacto-titulo" novalidate>
           <p class="campo">
             <label for="nombre">Nombre completo</label>
             <input
@@ -183,11 +212,17 @@
 
           <p class="campo">
             <label for="telefono">Teléfono</label>
+
             <input
               type="tel"
               id="telefono"
               name="telefono"
               placeholder="8888-8888"
+              inputmode="tel"
+              autocomplete="tel"
+              maxlength="15"
+              pattern="[0-9+\-\s()]{8,15}"
+              title="Escribe un teléfono válido: solo números, de 8 a 15 dígitos. Ejemplo: 8888-8888"
             />
           </p>
 
@@ -215,6 +250,13 @@
           </p>
 
           <button type="submit">Enviar mensaje</button>
+          <p
+            id="mensaje-formulario"
+            class="mensaje-formulario"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          ></p>
         </form>
       </section>
     </main>
@@ -237,15 +279,21 @@
         <a href="#contacto"> Contacto </a>
       </nav>
 
-      <nav class="legal-links">
-        <a href="#privacidad">Política de Privacidad</a>
-        <a href="#cookies">Política de Cookies</a>
-        <a href="#aviso-legal">Aviso Legal</a>
+      <nav class="legal-links" aria-label="Enlaces legales">
+        <a href="politica-privacidad.html">Política de privacidad</a>
+        <a href="politica-cookies.html">Política de cookies</a>
+        <a href="terminos-condiciones.html">Términos y condiciones</a>
+        <a href="politica-servicios.html"
+          >Política de prestación de servicios</a
+        >
+        <a href="aviso-legal.html">Aviso legal</a>
       </nav>
-
       <p class="copyright">
         &copy; 2026 TecnoServicios Villalobos CR. Todos los derechos reservados.
       </p>
     </footer>
+    <!-- Carga las funciones del menú y del formulario.
+     defer permite ejecutar el archivo después de analizar el HTML. -->
+    <script src="Assets/scripts/main.js" defer></script>
   </body>
 </html>
