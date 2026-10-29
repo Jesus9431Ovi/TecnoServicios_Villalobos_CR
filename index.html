@@ -95,15 +95,18 @@
         <a href="#inicio">Inicio</a>
         <a href="#nosotros">Nosotros</a>
         <a href="#servicios">Servicios</a>
+        <a href="#beneficios">Beneficios</a>
+        <a href="#proceso">Cómo trabajamos</a>
+        <a href="#preguntas">Preguntas frecuentes</a>
         <a href="#contacto">Contacto</a>
       </nav>
     </header>
-    <main id="contenido" tabindex="-1">
+    <main id="contenido">
       <!-- =========================
      HERO PRINCIPAL
 ========================== -->
 
-      <section id="inicio" class="hero" aria-labelledby="hero-titulo">
+      <section id="inicio" class="hero" aria-label="Area de inicio, hero-image">
         <!-- Imagen responsive -->
 
         <picture class="hero-imagen">
@@ -119,7 +122,7 @@
 
           <img
             src="Assets/images/hero-desktop_1598x900.webp"
-            alt=" "
+            alt="TecnoServicios Villalobos CR, ir al inicio"
             fetchpriority="high"
           />
         </picture>
@@ -148,46 +151,265 @@
         </article>
       </section>
 
-      <section id="nosotros" aria-labelledby="nosotros-titulo">
-        <h2>Sobre Nosotros</h2>
+      <section id="nosotros" aria-labelledby="titulo-nosotros">
+        <header class="encabezado-seccion">
+          <h2 id="titulo-nosotros">Sobre Nosotros</h2>
 
-        <p>
-          En TecnoServicios Villalobos CR ofrecemos soluciones tecnológicas y
-          servicios informáticos orientados a satisfacer las necesidades de
-          nuestros clientes.
-        </p>
+          <p class="texto-intro">
+            Soluciones informáticas prácticas, con comunicación clara y atención
+            orientada a cada necesidad.
+          </p>
+        </header>
+
+        <section class="nosotros-contenido" aria-label="Nuestro enfoque">
+          <article class="nosotros-tarjeta">
+            <h3>¿Qué buscamos?</h3>
+            <p>
+              En TecnoServicios Villalobos CR buscamos facilitar el uso de la
+              tecnología mediante soluciones informáticas prácticas y atención
+              orientada a las necesidades de cada persona o negocio.
+            </p>
+          </article>
+
+          <article class="nosotros-tarjeta">
+            <h3>Nuestro enfoque</h3>
+            <p>
+              Nos enfocamos en necesidades relacionadas con equipos
+              informáticos, conectividad y presencia digital, explicando las
+              alternativas disponibles antes de iniciar cada trabajo.
+            </p>
+          </article>
+        </section>
       </section>
 
-      <section id="servicios" class="seccion-servicios" aria-labelledby="servicios-titulo">
+      <section
+        id="servicios"
+        class="seccion-servicios"
+        aria-label="Area de servicios"
+      >
         <header class="encabezado-seccion">
           <h2>Nuestros Servicios</h2>
           <p>Soluciones tecnológicas para tus necesidades.</p>
         </header>
 
-        <section class="servicios-grid"  >
+        <section class="servicios-grid">
           <article class="tarjeta-servicio">
-            <h3>Soporte Técnico</h3>
-            <p>Mantenimiento, reparación y configuración de equipos.</p>
+            <h3>Soporte técnico</h3>
+            <p>
+              Ayuda para identificar y resolver problemas de computadoras y
+              programas.
+            </p>
+            <ul class="lista-servicios">
+              <li>Diagnóstico de equipos.</li>
+              <li>Mantenimiento preventivo.</li>
+              <li>Instalación y configuración de software.</li>
+              <li>Solución de problemas técnicos.</li>
+            </ul>
+            <a class="enlace-servicio" href="#contacto"> Consultar servicio </a>
           </article>
 
           <article class="tarjeta-servicio">
-            <h3>Desarrollo Web</h3>
-            <p>Creación de sitios web modernos y adaptables.</p>
+            <h3>Desarrollo web</h3>
+            <p>
+              Creación de páginas web para presentar negocios, servicios y
+              productos.
+            </p>
+            <ul class="lista-servicios">
+              <li>Sitios web empresariales.</li>
+              <li>Diseño adaptable a móviles.</li>
+              <li>Páginas de presentación de servicios.</li>
+              <li>Mejoras de estructura y contenido.</li>
+            </ul>
+            <a class="enlace-servicio" href="#contacto"> Consultar servicio </a>
           </article>
 
           <article class="tarjeta-servicio">
-            <h3>Redes Informáticas</h3>
-            <p>Instalación y configuración de redes.</p>
+            <h3>Redes informáticas</h3>
+            <p>
+              Configuración y revisión de la conectividad de equipos y redes.
+            </p>
+            <ul class="lista-servicios">
+              <li>Configuración de redes.</li>
+              <li>Revisión de conexión.</li>
+              <li>Conectividad entre dispositivos.</li>
+              <li>Orientación para resolver fallos.</li>
+            </ul>
+            <a class="enlace-servicio" href="#contacto"> Consultar servicio </a>
+          </article>
+
+          <article class="tarjeta-servicio">
+            <h3>Seguridad informática</h3>
+            <p>
+              Orientación para mejorar las prácticas básicas de seguridad
+              digital.
+            </p>
+            <ul class="lista-servicios">
+              <li>Recomendaciones de contraseñas seguras.</li>
+              <li>Actualizaciones de software.</li>
+              <li>Buenas prácticas de respaldo.</li>
+              <li>Orientación sobre protección de equipos.</li>
+            </ul>
+            <a class="enlace-servicio" href="#contacto"> Consultar servicio </a>
           </article>
         </section>
       </section>
 
-      <section id="contacto" aria-labelledby="contacto-titulo">
+      <section
+        class="seccion seccion-beneficios"
+        id="beneficios"
+        aria-labelledby="titulo-beneficios"
+      >
+        <h2 id="titulo-beneficios">¿Por qué elegirnos?</h2>
+
+        <p class="texto-intro">
+          Buscamos ofrecer soluciones tecnológicas prácticas y adaptadas a las
+          necesidades de cada persona o negocio.
+        </p>
+
+        <section class="beneficios-grid" aria-label="Ventajas del servicio">
+          <article class="tarjeta-beneficio">
+            <h3>Atención personalizada</h3>
+            <p>Escuchamos tu necesidad antes de recomendar una solución.</p>
+          </article>
+
+          <article class="tarjeta-beneficio">
+            <h3>Soluciones prácticas</h3>
+            <p>Buscamos alternativas claras y adecuadas para cada situación.</p>
+          </article>
+
+          <article class="tarjeta-beneficio">
+            <h3>Comunicación clara</h3>
+            <p>
+              Explicamos el problema y las opciones disponibles de forma
+              sencilla.
+            </p>
+          </article>
+
+          <article class="tarjeta-beneficio">
+            <h3>Enfoque tecnológico</h3>
+            <p>
+              Trabajamos en soluciones relacionadas con equipos, redes y
+              presencia digital.
+            </p>
+          </article>
+        </section>
+      </section>
+
+      <section
+        class="seccion seccion-proceso"
+        id="proceso"
+        aria-labelledby="titulo-proceso"
+      >
+        <h2 id="titulo-proceso">¿Cómo trabajamos?</h2>
+
+        <p class="texto-intro">
+          Un proceso sencillo para comprender tu necesidad y definir los
+          siguientes pasos.
+        </p>
+
+        <section class="proceso-grid" aria-label="Etapas del servicio">
+          <article class="paso-proceso">
+            <p class="numero-paso" aria-hidden="true">01</p>
+            <h3>Escuchamos tu consulta</h3>
+            <p>Nos explicas qué necesitas o qué problema deseas resolver.</p>
+          </article>
+
+          <article class="paso-proceso">
+            <p class="numero-paso" aria-hidden="true">02</p>
+            <h3>Evaluamos la necesidad</h3>
+            <p>Revisamos la información disponible y aclaramos los detalles.</p>
+          </article>
+
+          <article class="paso-proceso">
+            <p class="numero-paso" aria-hidden="true">03</p>
+            <h3>Proponemos una solución</h3>
+            <p>
+              Te explicamos las opciones y, cuando corresponda, el costo
+              estimado.
+            </p>
+          </article>
+
+          <article class="paso-proceso">
+            <p class="numero-paso" aria-hidden="true">04</p>
+            <h3>Coordinamos el trabajo</h3>
+            <p>
+              Definimos el alcance y los siguientes pasos antes de comenzar.
+            </p>
+          </article>
+        </section>
+
+        <a class="boton boton-primario" href="#contacto">
+          Consultar mi necesidad
+        </a>
+      </section>
+
+      <section
+        class="seccion seccion-faq"
+        id="preguntas"
+        aria-labelledby="titulo-preguntas"
+      >
+        <h2 id="titulo-preguntas">Preguntas frecuentes</h2>
+
+        <p class="texto-intro">
+          Algunas respuestas para ayudarte a conocer nuestros servicios.
+        </p>
+
+        <section class="lista-preguntas" aria-label="Preguntas y respuestas">
+          <details class="pregunta">
+            <summary>¿Qué servicios informáticos ofrecen?</summary>
+            <p>
+              Ofrecemos información sobre soporte técnico, desarrollo web y
+              redes informáticas. Consulta para confirmar si podemos atender tu
+              necesidad específica.
+            </p>
+          </details>
+
+          <details class="pregunta">
+            <summary>¿Cómo puedo solicitar una cotización?</summary>
+            <p>
+              Puedes completar el formulario de contacto y describir el servicio
+              que necesitas para iniciar la consulta.
+            </p>
+          </details>
+
+          <details class="pregunta">
+            <summary>¿El costo es igual para todos los trabajos?</summary>
+            <p>
+              El costo depende del tipo de servicio y del alcance del trabajo.
+              Es necesario revisar cada solicitud antes de confirmar un precio.
+            </p>
+          </details>
+
+          <details class="pregunta">
+            <summary>¿Atienden consultas de personas y empresas?</summary>
+            <p>
+              El proyecto está orientado a personas, emprendedores y empresas.
+              La disponibilidad de cada servicio debe confirmarse al consultar.
+            </p>
+          </details>
+
+          <details class="pregunta">
+            <summary>¿El formulario envía mi mensaje automáticamente?</summary>
+            <p>
+              Por ahora, el formulario valida los datos en el navegador. Para
+              recibir solicitudes de forma real, debe conectarse a un servicio
+              de formularios o a un servidor.
+            </p>
+          </details>
+        </section>
+      </section>
+
+      <section id="contacto" aria-label="Area de contacto">
         <h2>Contacto</h2>
 
         <p>Solicita información sobre nuestros servicios informáticos.</p>
 
-        <form id="formulario-contacto" class="formulario-contacto" aria-labelledby="contacto-titulo" novalidate>
+        <form
+          id="formulario-contacto"
+          class="formulario-contacto"
+          aria-label="Formulario de contacto"
+          novalidate
+        >
           <p class="campo">
             <label for="nombre">Nombre completo</label>
             <input
@@ -292,8 +514,7 @@
         &copy; 2026 TecnoServicios Villalobos CR. Todos los derechos reservados.
       </p>
     </footer>
-    <!-- Carga las funciones del menú y del formulario.
-     defer permite ejecutar el archivo después de analizar el HTML. -->
+
     <script src="Assets/scripts/main.js" defer></script>
   </body>
 </html>
